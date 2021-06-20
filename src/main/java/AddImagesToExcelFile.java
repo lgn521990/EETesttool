@@ -18,14 +18,14 @@ public class AddImagesToExcelFile {
         {
             wb = new XSSFWorkbook();
             sheet=wb.createSheet(sheetName);
-            EEHome.count=0;
+            CropImage.count=0;
             flag=false;
         }else{
             wb = new XSSFWorkbook(new FileInputStream(filePath));
             // create sheet
             if(wb.getSheetIndex(sheetName)==-1) {
                 sheet = wb.createSheet(sheetName);
-                EEHome.count=0;
+                CropImage.count=0;
             }
             else
                 sheet=wb.getSheet(sheetName);
@@ -42,13 +42,13 @@ public class AddImagesToExcelFile {
         if(!(new File(filePath)).exists()) {
             flag=true;
             System.out.println("prior reading screenshot");
-            EEHome.count=0;
+            CropImage.count=0;
         }
 
         initializeExcel(filePath,SheetName);
-        count=(EEHome.count==0)?0:count;
+        count=(CropImage.count==0)?0:count;
 
-        InputStream is = new FileInputStream("F:// Shot.jpg");
+        InputStream is = new FileInputStream("CroppedShot.jpg");
         byte[] bytes = IOUtils.toByteArray(is);
         int pictureIdx = wb.addPicture(bytes, Workbook.PICTURE_TYPE_JPEG);
         is.close();

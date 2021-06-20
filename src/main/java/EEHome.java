@@ -11,10 +11,10 @@ import java.io.IOException;
 
 public class EEHome {
 
-    public static int count;
+
     //public static XSSFWorkbook wb;
     public static void main(String[] args) throws IOException {
-        count=0;
+        CropImage.count=0;
 
        //AddImagesToExcelFile.initializeExcel();
         final JFrame frame = new JFrame("EasyEvidencing");
@@ -39,7 +39,13 @@ public class EEHome {
         btn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 frame.setVisible(false);
-                captureScreen(field.getText(),field2.getText());
+                try {
+                    new CropImage().start(field.getText(),field2.getText());
+                } catch (AWTException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 frame.setVisible(true);
             }
         });
@@ -55,26 +61,4 @@ public class EEHome {
         frame.setSize(310, 130);
     }
 
-
-    public static void captureScreen(String filepath,String sheetName)
-    {
-
-        try {
-            Robot r = new Robot();
-            // It saves screenshot to desired path
-            String path = "F:// Shot.jpg";
-            // Used to get ScreenSize and capture image
-            Rectangle capture =
-                    new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-            BufferedImage Image = r.createScreenCapture(capture);
-            ImageIO.write(Image, "jpg", new File(path));
-            System.out.println("Screenshot saved");
-
-           AddImagesToExcelFile.addImages(count,filepath,sheetName);
-            count=count+19;
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-        }
-    }
 }
